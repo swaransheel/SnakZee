@@ -117,7 +117,7 @@ Create a `.env.local` file in the project's root directory. Add the following en
 
 ```env
 # Sanity CMS Project Configuration
-NEXT_PUBLIC_SANITY_PROJECT_ID="55l3y358"
+NEXT_PUBLIC_SANITY_PROJECT_ID="your-sanity-project-id"
 NEXT_PUBLIC_SANITY_DATASET="production"
 
 # Supabase Order Logging Credentials (Optional, falls back to console logging)

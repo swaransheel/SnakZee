@@ -1,26 +1,316 @@
 @import "tailwindcss";
 
+/* ═══════════════════════ CSS CUSTOM VARIABLES (HSL) ═══════════════════════ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 38 100% 96%;
+  --foreground: 0 60% 30%;
+
+  --card: 38 60% 91%;
+  --card-foreground: 0 60% 25%;
+
+  --primary: 0 59% 30%;
+  --primary-foreground: 38 100% 96%;
+
+  --secondary: 45 80% 53%;
+  --secondary-foreground: 0 59% 20%;
+
+  --muted: 38 60% 88%;
+  --muted-foreground: 0 30% 35%;
+
+  --accent: 43 86% 47%;
+  --accent-foreground: 0 59% 20%;
+
+  --destructive: 14 58% 50%;
+  --destructive-foreground: 38 100% 96%;
+
+  --border: 43 50% 70%;
+  --input: 43 50% 80%;
+  --ring: 0 59% 30%;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --font-sans: var(--font-outfit), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-playfair), var(--font-telugu), serif;
+  --font-telugu: var(--font-telugu), var(--font-baloo), sans-serif;
+  --font-serif: var(--font-cormorant), var(--font-playfair), serif;
+
+  --animate-float-slow: float-slow 6s ease-in-out infinite;
+  --animate-spin-slow: spin-slow 30s linear infinite;
+  --animate-wiggle: wiggle 3s ease-in-out infinite;
+  --animate-fadeInUp: fadeInUp 0.8s ease-out forwards;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ═══════════════════════ KEYFRAMES ═══════════════════════ */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-15px); }
+}
+@keyframes spin-slow {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(6deg); }
+  75%      { transform: rotate(-6deg); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ═══════════════════════ BASE BODY & SCROLLBAR ═══════════════════════ */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
 }
+
+/* Warm radial gradient background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, hsla(45, 80%, 53%, 0.08), transparent),
+    radial-gradient(ellipse 70% 50% at 80% 85%, hsla(0, 59%, 30%, 0.06), transparent),
+    radial-gradient(ellipse 60% 60% at 50% 50%, hsla(43, 86%, 47%, 0.04), transparent);
+  pointer-events: none;
+}
+
+/* SVG rangoli pattern overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.025;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='18' fill='none' stroke='%237A1F1F' stroke-width='1'/%3E%3Ccircle cx='40' cy='40' r='10' fill='none' stroke='%237A1F1F' stroke-width='0.6'/%3E%3Ccircle cx='40' cy='40' r='3' fill='%23D4A017' opacity='0.5'/%3E%3Cline x1='40' y1='18' x2='40' y2='62' stroke='%237A1F1F' stroke-width='0.4'/%3E%3Cline x1='18' y1='40' x2='62' y2='40' stroke='%237A1F1F' stroke-width='0.4'/%3E%3Cline x1='24.44' y1='24.44' x2='55.56' y2='55.56' stroke='%237A1F1F' stroke-width='0.3'/%3E%3Cline x1='55.56' y1='24.44' x2='24.44' y2='55.56' stroke='%237A1F1F' stroke-width='0.3'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* Scrollbar – WebKit */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsla(var(--primary) / 0.35);
+  border-radius: 5px;
+  border: 2px solid hsl(var(--muted));
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsla(var(--primary) / 0.55);
+}
+
+/* Scrollbar – Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsla(var(--primary) / 0.35) hsl(var(--muted));
+}
+
+/* Selection styling */
+::selection {
+  background-color: hsla(var(--primary) / 0.2);
+  color: hsl(var(--primary));
+}
+
+/* ═══════════════════════ CUSTOM TRADITIONAL DESIGN PATTERNS ═══════════════════════ */
+
+/* Muggu / Rangoli / Kolam background pattern */
+.muggu-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='60' cy='60' r='30' fill='none' stroke='%237A1F1F' stroke-width='1' opacity='0.15'/%3E%3Ccircle cx='60' cy='60' r='20' fill='none' stroke='%237A1F1F' stroke-width='0.8' opacity='0.12'/%3E%3Ccircle cx='60' cy='60' r='4' fill='%23D4A017' opacity='0.2'/%3E%3Ccircle cx='60' cy='26' r='2.5' fill='%23D4A017' opacity='0.18'/%3E%3Ccircle cx='60' cy='94' r='2.5' fill='%23D4A017' opacity='0.18'/%3E%3Ccircle cx='26' cy='60' r='2.5' fill='%23D4A017' opacity='0.18'/%3E%3Ccircle cx='94' cy='60' r='2.5' fill='%23D4A017' opacity='0.18'/%3E%3Cline x1='60' y1='26' x2='60' y2='94' stroke='%237A1F1F' stroke-width='0.5' opacity='0.1'/%3E%3Cline x1='26' y1='60' x2='94' y2='60' stroke='%237A1F1F' stroke-width='0.5' opacity='0.1'/%3E%3Cline x1='36' y1='36' x2='84' y2='84' stroke='%237A1F1F' stroke-width='0.4' opacity='0.08'/%3E%3Cline x1='84' y1='36' x2='36' y2='84' stroke='%237A1F1F' stroke-width='0.4' opacity='0.08'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* Leaf divider */
+.leaf-divider {
+  height: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='24' viewBox='0 0 60 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 4 C22 4, 6 12, 2 12 C6 12, 22 20, 30 20 C38 20, 54 12, 58 12 C54 12, 38 4, 30 4Z' fill='none' stroke='%237A1F1F' stroke-width='1' opacity='0.2'/%3E%3Ccircle cx='30' cy='12' r='2' fill='%23D4A017' opacity='0.3'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+/* Temple gopuram border top and bottom */
+.temple-border-top {
+  height: 28px;
+  background-color: #7A1F1F;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='20' viewBox='0 0 40 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20 L0 12 L5 12 L5 8 L10 8 L10 4 L15 4 L15 0 L25 0 L25 4 L30 4 L30 8 L35 8 L35 12 L40 12 L40 20Z' fill='%23FFFFFF' opacity='0.9'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center top;
+  transform: rotate(180deg);
+}
+
+.temple-border-bottom {
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='20' viewBox='0 0 40 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20 L0 12 L5 12 L5 8 L10 8 L10 4 L15 4 L15 0 L25 0 L25 4 L30 4 L30 8 L35 8 L35 12 L40 12 L40 20Z' fill='%237A1F1F' opacity='0.12'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center top;
+  transform: rotate(180deg);
+}
+
+/* Hand-crafted card with hover transitions */
+.hand-card {
+  border-radius: 0.75rem;
+  border: 2px solid hsla(var(--accent) / 0.4);
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  box-shadow: 0 4px 16px hsla(var(--primary) / 0.08);
+  overflow: hidden;
+}
+
+.hand-card:hover {
+  transform: translateY(-6px) rotate(-0.5deg);
+  border-color: hsla(var(--primary) / 0.6);
+  box-shadow: 0 12px 32px hsla(var(--primary) / 0.15), 0 4px 12px hsla(var(--accent) / 0.1);
+}
+
+/* Traditional Deep-Red Ghee Button */
+.btn-traditional {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: linear-gradient(135deg, #7A1F1F, #9B2929);
+  color: hsl(var(--primary-foreground));
+  border: 2px solid #D4A017;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(90, 21, 21, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-traditional:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(90, 21, 21, 0.45);
+}
+
+.btn-traditional:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 6px rgba(90, 21, 21, 0.25);
+}
+
+/* WhatsApp Brand Button */
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: #ffffff;
+  border: 2px solid #0E6655;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(10, 74, 61, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(10, 74, 61, 0.45);
+}
+
+.btn-whatsapp:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 6px rgba(10, 74, 61, 0.2);
+}
+
+/* ═══════════════════════ ADMIN STUDIO COMPONENT EXTRA STYLES ═══════════════════════ */
+.admin-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  transition: opacity 0.3s ease;
+}
+
+.admin-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  z-index: 52;
+  width: 95vw;
+  max-width: 1200px;
+  height: 85vh;
+  background: hsl(var(--background));
+  border: 3px solid hsl(var(--accent));
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.admin-modal.open {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ═══════════════════════ SEARCH BAR STYLING ═══════════════════════ */
+.search-input {
+  width: 100%;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  background-color: hsla(var(--card) / 0.5);
+  border: 2px solid hsla(var(--accent) / 0.4);
+  border-radius: 0.75rem;
+  color: hsl(var(--primary));
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: hsla(var(--muted-foreground) / 0.6);
+}
+
+.search-input:focus {
+  border-color: hsl(var(--primary));
+  background-color: hsl(var(--card));
+  box-shadow: 0 0 0 3px hsla(var(--accent) / 0.2);
+}
+

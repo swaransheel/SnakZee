@@ -10,7 +10,6 @@ import BestSellers from "../components/BestSellers";
 import dynamic from "next/dynamic";
 import ContactSection from "../components/ContactSection";
 import Footer from "../components/Footer";
-import AdminBanner from "../components/AdminBanner";
 
 const CartDrawer = dynamic(() => import("../components/CartDrawer"), { ssr: false });
 const CheckoutModal = dynamic(() => import("../components/CheckoutModal"), { ssr: false });
@@ -223,12 +222,6 @@ export default function Storefront() {
 
   return (
     <div className="flex flex-col min-h-screen relative">
-      {/* Admin Help Banner */}
-      <AdminBanner
-        isSanityConnected={isSanityConnected}
-        onOpenAdmin={() => setAdminOpen(true)}
-      />
-
       {/* Header Sticky Navigation */}
       <Navbar
         cartCount={cartCount}
